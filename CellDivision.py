@@ -5,12 +5,13 @@ import pandas as pd
 inputfile = '/Users/lindanieman/Documents/WORK/PythonScripts/Data/CellDivision/60x_miniscan_revised.HP.LTNtest.object_table.txt'
 GUI_phenotypeLabel = 'Good'
 
-## this script removes unwanted phenotypes from large a CellReview object table
+# ------------------------
+## This script removes unwanted phenotypes from large a CellReview object table
 ## INPUT:  CellReview HP object table, phenotype of interest
 ## OUTPUT:  CSV file that contains only phenotypes of interest
 
 # pass input file path and phenotype label from GUI
-def getSelectData(inputfile, GUI_phentotypeLabel):
+def getSelectCellReviewData(inputfile, GUI_phentotypeLabel):
     # load object table as a data frame
     df = pd.read_csv(inputfile, delimiter='\t')
 
@@ -31,10 +32,13 @@ def getSelectData(inputfile, GUI_phentotypeLabel):
     # write output to file
     df.to_csv(outputfile)
 
-getSelectData(inputfile,'EVENTS')
+getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
 
 
-# NEW STUFF
-# # #
+# --------------------------
+## This script pulls inForm cell_seg_data.txt for selected phenotypes
+## INPUT:  outputfile from getSelectData
+## OUTPUT:  CSV file with morphological information for phenotypes of interest
 
+#def getSelectCellSegData
 #
