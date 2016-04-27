@@ -76,5 +76,4 @@ def getSelectCellSegData(inputfile):
     data.to_csv(outputfile, delimiter=',')
     print 'Done!'
 
-
 getSelectCellSegData(inputfile)
