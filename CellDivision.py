@@ -35,7 +35,6 @@ def getSelectCellReviewData(inputfile, GUI_phentotypeLabel):
 
 getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
 
-
 # --------------------------
 
 ## This script pulls inForm cell_seg_data.txt for selected phenotypes
