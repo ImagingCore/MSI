@@ -3,8 +3,8 @@ import pandas as pd
 import re
 
 # INPUTS
-inputfile = '/Volumes/ctc2-raw4/MSI_149/Vectra1/Images/CellDivision/60x_miniscan_revised/60x_miniscan_revised.HP.LTNtest.object_table.txt'
-GUI_phenotypeLabel = 'Good'
+#inputfile = '/Volumes/ctc2-raw4/MSI_149/Vectra1/Images/CellDivision/60x_miniscan_revised/60x_miniscan_revised.HP.LTNtest.object_table.txt'
+#GUI_phenotypeLabel = 'Good'
 
 # ------------------------
 ## This script removes unwanted phenotypes from large a CellReview object table
@@ -28,12 +28,12 @@ def getSelectCellReviewData(inputfile, GUI_phentotypeLabel):
     #print df.ix[:, ['LP ID', 'Phenotype (Reviewer)']].head(5)
 
     # keep rows that do not have desired phenotype
-    df = df[df.ix[:,'Phenotype (Reviewer)']==GUI_phenotypeLabel]
+    df = df[df.ix[:,'Phenotype (Reviewer)']== GUI_phentotypeLabel]
 
     # write output to file
     df.to_csv(outputfile, index=False)
 
-getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
+#getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
 
 
 # --------------------------
@@ -72,4 +72,4 @@ def getSelectCellSegData(inputfile):
         print data
         break
 
-getSelectCellSegData(inputfile)
+#getSelectCellSegData(inputfile)
