@@ -1,10 +1,10 @@
 from Tkinter import *
 import tkFileDialog
-import inspect
+import pandas as pd
+import CellDivision
 
 
 class MainGuiClass(Frame):
-
 
     # all labels
     FILE = 'Select the file'
@@ -12,18 +12,28 @@ class MainGuiClass(Frame):
     PROCESS = 'Process!'
     PHENOTYPE = 'Phenotypes:'
 
-    def phenotypes(self):
-        self.ls.insert(1, 'Red')
-        self.ls.insert(2, 'Green')
-        self.ls.insert(3, 'Blue')
+    def updateListBox(self, phenotypesIn):
+        self.ls.delete(0, END)  # clear list
+        for item in phenotypesIn:
+            self.ls.insert(END, item)
 
     # Operations
     def pickTheFile(self):
-        self.phenotypes()
+        # open the file selection window, read the the file into a dataframe,
+        # pull out the column, drop NaN values and get the unique names of the
+        # phenotypes
+        self.filename = tkFileDialog.askopenfilename(filetypes=[("TXT", "*.txt")])
+        if self.filename != '':
+            df = pd.read_csv(self.filename, delimiter='\t')
+            phenotypes = df['Phenotype (Reviewer)'].dropna().unique()
+            self.updateListBox(phenotypes)
 
     def processIt(self):
-        print 'process it!'
-
+        if self.filename != None and self.filename != '':
+            selection = self.ls.get(ACTIVE)
+            CellDivision.getSelectCellReviewData(self.filename, selection)
+        else:
+            print 'load the file first!'
 
     # Main window widgets and layout
     def createWidgets(self,masterIn):
