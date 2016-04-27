@@ -5,6 +5,7 @@ import inspect
 
 class MainGuiClass(Frame):
 
+
     # all labels
     FILE = 'Select the file'
     EXIT_PROGRAM = 'Exit'
