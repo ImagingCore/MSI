@@ -1,8 +1,9 @@
 import os
 import pandas as pd
+import re
 
 # INPUTS
-inputfile = '/Users/konstk/Desktop/MSI_testfile.txt'
+inputfile = '/Volumes/ctc2-raw4/MSI_149/Vectra1/Images/CellDivision/60x_miniscan_revised/60x_miniscan_revised.HP.LTNtest.object_table.txt'
 GUI_phenotypeLabel = 'Good'
 
 # ------------------------
@@ -30,19 +31,45 @@ def getSelectCellReviewData(inputfile, GUI_phentotypeLabel):
     df = df[df.ix[:,'Phenotype (Reviewer)']==GUI_phenotypeLabel]
 
     # write output to file
-    df.to_csv(outputfile)
+    df.to_csv(outputfile, index=False)
 
 getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
 
 
 # --------------------------
+
 ## This script pulls inForm cell_seg_data.txt for selected phenotypes
 ## INPUT:  outputfile from getSelectData
 ## OUTPUT:  CSV file with morphological information for phenotypes of interest
 
-#def getSelectCellSegData
-#
+# pass input file path and IPP folder location
+def getSelectCellSegData(inputfile):
 
+    # parse input fullfilepath
+    path, filename = os.path.split(inputfile)
+    root, ext = os.path.splitext(filename)
 
+    # Object table with the selected phenotypes
+    objectTable = os.path.join(path, root+'_GOOD.csv')
 
+    # load object table as a data frame
+    df = pd.read_csv(objectTable, delimiter=',')
 
+    # create cell_seg output filename with same path as input file, adding the suffix _GOOD
+    outputfile = os.path.join(path, 'cell_seg_data_GOOD.csv')
+
+    IPP_path = os.path.join(path, 'IPP')
+
+    data = []
+
+    # create list of data
+    for f in df.ix[:,'Sample Name']:
+
+        rootname = re.split(']', f)[0]
+        fname = os.path.join(IPP_path, rootname + ']_cell_seg_data.txt')
+
+        data = pd.read_csv(fname, delimiter='\t')
+        print data
+        break
+
+getSelectCellSegData(inputfile)
