@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 # INPUTS
-inputfile = '/Users/lindanieman/Documents/WORK/PythonScripts/Data/CellDivision/60x_miniscan_revised.HP.LTNtest.object_table.txt'
+inputfile = '/Users/konstk/Desktop/MSI_testfile.txt'
 GUI_phenotypeLabel = 'Good'
 
 # ------------------------
@@ -42,3 +42,7 @@ getSelectCellReviewData(inputfile,GUI_phenotypeLabel)
 
 #def getSelectCellSegData
 #
+
+
+
+
