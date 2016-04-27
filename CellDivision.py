@@ -76,5 +76,4 @@ def getSelectCellSegData(inputfile):
     # write output to csv file
     data.to_csv(outputfile, delimiter=',', index=False)
 
-
 getSelectCellSegData(inputfile)
