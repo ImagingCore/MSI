@@ -60,7 +60,7 @@ def getSelectCellSegData(inputfile):
 
     IPP_path = os.path.join(path, 'IPP')
 
-    data = []
+    data = pd.DataFrame() # don't know size of final dataframe, b/c can have multiple objects in a single FOV
 
     # create list of data
     for f in df.ix[:,'Sample Name']:
@@ -68,8 +68,13 @@ def getSelectCellSegData(inputfile):
         rootname = re.split(']', f)[0]
         fname = os.path.join(IPP_path, rootname + ']_cell_seg_data.txt')
 
-        data = pd.read_csv(fname, delimiter='\t')
-        print data
-        break
+        dat = pd.read_csv(fname, delimiter='\t')
+
+
+        data = pd.concat([data,dat], ignore_index=True)
+
+    data.to_csv(outputfile, delimiter=',')
+    print 'Done!'
+
 
 getSelectCellSegData(inputfile)
