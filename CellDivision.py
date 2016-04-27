@@ -3,8 +3,8 @@ import pandas as pd
 import re
 
 # INPUTS
-#inputfile = '/Volumes/ctc2-raw4/MSI_149/Vectra1/Images/CellDivision/60x_miniscan_revised/60x_miniscan_revised.HP.LTNtest.object_table.txt'
-#GUI_phenotypeLabel = 'Good'
+inputfile = '/Volumes/ctc2-raw4/MSI_149/Vectra1/Images/CellDivision/60x_miniscan_revised/60x_miniscan_revised.HP.LTNtest.object_table.txt'
+GUI_phenotypeLabel = 'Good'
 
 # ------------------------
 ## This script removes unwanted phenotypes from large a CellReview object table
@@ -54,14 +54,13 @@ def getSelectCellSegData(inputfile):
     # load object table as a data frame
     df = pd.read_csv(objectTable, delimiter=',')
 
-    # create cell_seg output filename with same path as input file, adding the suffix _GOOD
-    outputfile = os.path.join(path, 'cell_seg_data_GOOD.csv')
-
+    # note:  cell_seg_data files are in IPP folder
     IPP_path = os.path.join(path, 'IPP')
 
+    # initialize data frame that will contain data for phenotype of interest
     data = pd.DataFrame() # don't know size of final dataframe, b/c can have multiple objects in a single FOV
 
-    # create list of data
+    # populate dataframe that contains data for phentoype of interest
     for f in df.ix[:,'Sample Name']:
 
         rootname = re.split(']', f)[0]
@@ -69,10 +68,13 @@ def getSelectCellSegData(inputfile):
 
         dat = pd.read_csv(fname, delimiter='\t')
 
-
         data = pd.concat([data,dat], ignore_index=True)
 
-    data.to_csv(outputfile, delimiter=',')
-    print 'Done!'
+    # create cell_seg output filename with same path as input file, adding the suffix _GOOD
+    outputfile = os.path.join(path, 'cell_seg_data_GOOD.csv')
 
-#getSelectCellSegData(inputfile)
+    # write output to csv file
+    data.to_csv(outputfile, delimiter=',', index=False)
+
+
+getSelectCellSegData(inputfile)
