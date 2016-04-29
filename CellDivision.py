@@ -77,7 +77,7 @@ def getSelectCellSegData(inputfile, GUI_phenotypeLabel):
         data = pd.concat([data,dat], ignore_index=True)
 
     # create cell_seg output filename with same path as input file, adding the suffix _GOOD
-    outputfile = os.path.join(path, 'cell_seg_data_GOOD.csv')
+    outputfile = os.path.join(path, 'cell_seg_data_' + GUI_phenotypeLabel + '_GOOD.csv')
 
     # write output to csv file
     data.to_csv(outputfile, delimiter=',', index=False)

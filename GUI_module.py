@@ -55,13 +55,14 @@ class MainGuiClass(Frame):
             selection = self.ls.get(ACTIVE)
             CellDivision.getSelectCellReviewData(self.filename, selection)
             status_return, color = CellDivision.getSelectCellSegData(self.filename, selection)
-            self.updateStatus(self.master, status_return, 1, 5000, color)
+            self.updateStatus(self.master, status_return, 1, 4000, color)
         else:
-            self.updateStatus(self.master, "  Load the table first!", 1, 5000, 'red')
+            self.updateStatus(self.master, "  Load the table first!", 1, 3000, 'red')
 
     def clearList(self):
         self.ls.delete(0, END)  # clear list
         self.filename = ''
+        self.updateStatus(self.master, "", 1, 4000, 'black')
 
     # Main window widgets and layout
     def createWidgets(self,masterIn):
@@ -111,7 +112,7 @@ def main():
     global VERSION_DATE
     global VERSION_NUMBER
     VERSION_DATE = "4/29/16"
-    VERSION_NUMBER = "0.0.3"
+    VERSION_NUMBER = "0.0.4"
 
     # start main GUI window.
     # Instantiate a MainGuiClass object.
