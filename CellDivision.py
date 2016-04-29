@@ -82,4 +82,8 @@ def getSelectCellSegData(inputfile, GUI_phenotypeLabel):
     # write output to csv file
     data.to_csv(outputfile, delimiter=',', index=False)
 
+    statusOut = ' Done! '
+    statusColor = 'darkgreen'
+    return statusOut, statusColor
+
 #getSelectCellSegData(inputfile)

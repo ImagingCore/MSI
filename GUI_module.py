@@ -13,6 +13,26 @@ class MainGuiClass(Frame):
     PHENOTYPE = 'Phenotypes:'
     CLEAR = 'Clear'
 
+    def updateStatus(self, masterIn, statusIn, flashNum, Dur, color):
+        # accepts a string value and displays a flash status at the bottom; accepts the number of flashes
+        #  accepts flash duration (ms), accepts color
+        def writeStatus():
+            self.status_bar = Label(masterIn, text=statusIn, font=("Arial", 14), fg=color, bd=1, relief=SUNKEN,
+                                    anchor=W)
+            self.status_bar.grid(row=4, columnspan=2, sticky=W + E)
+        def emptyStatus():
+            self.status_bar = Label(masterIn, text=" ", font=("Arial", 14), fg=color, bd=1, relief=SUNKEN, anchor=W)
+            self.status_bar.grid(row=4, columnspan=2, sticky=W + E)
+
+        emptyStatus()
+        writeStatus()
+        last = 0
+        for k in range(flashNum):
+            masterIn.after(last + Dur, writeStatus)
+            last = last + Dur
+            masterIn.after(last + Dur, emptyStatus)
+            last = last + Dur
+
     def updateListBox(self, phenotypesIn):
         self.ls.delete(0, END)  # clear list
         for item in phenotypesIn:
@@ -34,11 +54,12 @@ class MainGuiClass(Frame):
         if self.filename != None and self.filename != '':
             selection = self.ls.get(ACTIVE)
             CellDivision.getSelectCellReviewData(self.filename, selection)
-            CellDivision.getSelectCellSegData(self.filename, selection)
+            status_return, color = CellDivision.getSelectCellSegData(self.filename, selection)
+            self.updateStatus(self.master, status_return, 1, 5000, color)
         else:
-            print 'load the file first!'
+            self.updateStatus(self.master, "  Load the table first!", 1, 5000, 'red')
 
-    def clearIt(self):
+    def clearList(self):
         self.ls.delete(0, END)  # clear list
         self.filename = ''
 
@@ -56,19 +77,25 @@ class MainGuiClass(Frame):
         self.button1 = Button(masterIn, text=self.FILE, font=("Arial", 16), command=self.pickTheFile)
         self.button2 = Button(masterIn, text=self.PROCESS, font=("Arial", 16), command=self.processIt)
         self.button3 = Button(masterIn, text=self.EXIT_PROGRAM, font=("Arial", 16), command=self.quit)
-        self.button4 = Button(masterIn, text=self.CLEAR, font=("Arial", 16), command=self.clearIt)
+        self.button4 = Button(masterIn, text=self.CLEAR, font=("Arial", 16), command=self.clearList)
 
         # Listbox
         self.ls = Listbox(masterIn)
+
+        # Status bar
+        self.status_bar = Label(masterIn, text=" ", font=("Arial", 13), fg='gray', bd=1, relief=SUNKEN, anchor=W)
 
         # Place all object in the window
         self.ver_label.grid(row=0, column=0, sticky=W)
         self.phen_label.grid(row=1, column=1, sticky=S)
         self.button1.grid(row=2, column=0, sticky=NW)
-        self.ls.grid(row=2, column=1, sticky=E)
+        self.ls.grid(row=2, column=1, padx=(5,5), pady=(0,5), sticky=E)
         self.button2.grid(row=3, column=0, sticky=W)
         self.button3.grid(row=3, column=1, sticky=E)
         self.button4.grid(row=3, column=1, sticky=S)
+        self.status_bar.grid(row=4, columnspan=2, sticky=W + E)
+
+
 
     # Class initialization
     def __init__(self, master=None):
@@ -83,8 +110,8 @@ def main():
     # Developer: remember to update these!
     global VERSION_DATE
     global VERSION_NUMBER
-    VERSION_DATE = "4/27/16"
-    VERSION_NUMBER = "0.0.2"
+    VERSION_DATE = "4/29/16"
+    VERSION_NUMBER = "0.0.3"
 
     # start main GUI window.
     # Instantiate a MainGuiClass object.
