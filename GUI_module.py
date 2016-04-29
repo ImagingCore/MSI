@@ -26,12 +26,13 @@ class MainGuiClass(Frame):
 
         emptyStatus()
         writeStatus()
-        last = 0
-        for k in range(flashNum):
-            masterIn.after(last + Dur, writeStatus)
-            last = last + Dur
-            masterIn.after(last + Dur, emptyStatus)
-            last = last + Dur
+        if flashNum > 1:
+            last = 0
+            for k in range(flashNum):
+                masterIn.after(last + Dur, writeStatus)
+                last = last + Dur
+                masterIn.after(last + Dur, emptyStatus)
+                last = last + Dur
 
     def updateListBox(self, phenotypesIn):
         self.ls.delete(0, END)  # clear list
@@ -57,7 +58,7 @@ class MainGuiClass(Frame):
             status_return, color = CellDivision.getSelectCellSegData(self.filename, selection)
             self.updateStatus(self.master, status_return, 1, 4000, color)
         else:
-            self.updateStatus(self.master, "  Load the table first!", 1, 3000, 'red')
+            self.updateStatus(self.master, "  Load the table first!", 1, 2000, 'red')
 
     def clearList(self):
         self.ls.delete(0, END)  # clear list
